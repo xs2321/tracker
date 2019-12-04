@@ -1,7 +1,11 @@
-from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Squirrel
+from django.shortcuts import render
 
-
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+def all_sightings(request):
+    sightings = Squirrel.objects.all()
+    context = {
+        'sightings': sightings,
+    }
+    return render(request, 'squirrel/map.html', context)
 # Create your views here.

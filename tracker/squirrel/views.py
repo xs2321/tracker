@@ -16,3 +16,12 @@ def all_squirrels(request):
         'squirrels': squirrels,
     }
     return render(request, 'squirrel/sightings.html', context)
+
+def add(request):
+    form = SquirrelForm(request.POST)
+    if form:
+        if form.is_valid():
+            form.save()
+            return redirect('all_squirrels')
+    else:
+        return render(request,'squirrel/add.html',{'form',form})

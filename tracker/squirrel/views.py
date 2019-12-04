@@ -1,7 +1,8 @@
-from django.http import HttpResponse,HttpResponseRedirect
 from .models import Squirrel
 from django.shortcuts import render 
-from .forms import SquirrelForm 
+from django.shortcuts import redirect
+from .forms import SquirrelForm
+
 def all_sightings(request):
     sightings = Squirrel.objects.all()
     context = {
@@ -18,10 +19,24 @@ def all_squirrels(request):
     return render(request, 'squirrel/sightings.html', context)
 
 def add(request):
-    form = SquirrelForm(request.POST)
-    if form:
+    if request.method=='POST':
+        form = SquirrelForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('all_squirrels')
+            return redirect(f'/squirrel/sightings')
     else:
-        return render(request,'squirrel/add.html',{'form',form})
+        form = SquirrelForm()
+
+    return render(request,'squirrel/edit.html',{'form':form})
+
+def update(request, squirrel_id):
+    squirrel = Squirrel.objects.get(squirrel_id=squirrel_id)
+    if request.method == 'POST':
+        #check form data
+        form = SquirrelForm(request.POST, instance=squirrel)
+        if form.is_valid():
+            form.save()
+            return redirect(f'/squirrel/sightings')
+    else:
+        form = SquirrelForm(instance=squirrel)
+    return render(request,'squirrel/edit.html',{'form':form})

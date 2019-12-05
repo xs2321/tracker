@@ -1,0 +1,16 @@
+<!doctype>
+<html>
+  <title>Stats</title>
+  <body>
+    <p>Age distribution</p>
+    <table>
+      {% for head,num in dict_1.items %}
+      <tr>
+	<th>{{head}}:</th>
+	<td>{{num}}</th>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>
+	

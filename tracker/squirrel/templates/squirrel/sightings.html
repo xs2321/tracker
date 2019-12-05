@@ -1,6 +1,7 @@
 <h1>All Squirrels</h1>
+<h2><a href=add>Click to add new squirrels!</a></h2>
 <ul>
 	{% for squirrel in squirrels %}
-		<li>{{ squirrel.squirrel_id }}</li>
+	<li>{{ squirrel }} <a href="{% url 'update' squirrel.squirrel_id %}">  Click to update</a></li>
 	{% endfor %}
 </ul>

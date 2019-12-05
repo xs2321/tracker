@@ -44,6 +44,7 @@ def update(request, squirrel_id):
     return render(request,'squirrel/edit.html',{'form':form})
 
 def stats(request):
+    #age
     cursor = connection.cursor()
     query = """select age,count(*)
                from squirrel_squirrel
@@ -51,7 +52,51 @@ def stats(request):
     cursor.execute(query)
     result = cursor.fetchall()
     dict_1=dict()
-    for i in range(len(result)):
-        dict_1[result[i][0]]=result[i][1]
+    dict_1[result[2][0]] = result[2][1]
+    dict_1[result[3][0]] = result[3][1]
+    dict_1['Unknown'] = result[0][1] + result[1][1]
+
+    #primary fur color
+    cursor = connection.cursor()
+    query = """select pri_color,count(*)
+               from squirrel_squirrel
+               group by pri_color"""
+    cursor.execute(query)
+    result = cursor.fetchall()
+    dict_2=dict()
+    dict_2[result[1][0]] = result[1][1]
+    dict_2[result[2][0]] = result[2][1]
+    dict_2[result[3][0]] = result[3][1]
+    dict_2['Unknown'] = result[0][1]
+
+    #location
+    cursor = connection.cursor()
+    query = """select location,count(*)
+               from squirrel_squirrel
+               group by location"""
+    cursor.execute(query)
+    result = cursor.fetchall()
+    dict_3=dict()
+    dict_3[result[1][0]] = result[1][1]
+    dict_3[result[2][0]] = result[2][1]
+    dict_3['Unknown'] = result[0][1]
+    #for i in range(len(result)):
+        #dict_3[result[i][0]]=result[i][1]
+    
+    #activities
+    cursor = connection.cursor()
+    query = """select count(*) as total_sightings, sum(running) as running, sum(chasing) as chasing,
+               sum(climbing) as climbing, sum(eating) as eating, sum(foraging) as foraging,
+               sum(kuks) as kuks, sum(quaas) as quaas, sum(moans) as moans, sum(tail_flags) as tail_flags,
+               sum(tail_twitches) as tail_twitches
+               from squirrel_squirrel"""
+    cursor.execute(query)
+    names = [i[0] for i in cursor.description]
+    result = cursor.fetchone()
+    dict_4 = dict()
+    for i in range(len(names)):
+        dict_4[names[i]] = result[i]
+
+
     return render(request,'squirrel/stats.html',locals())
 

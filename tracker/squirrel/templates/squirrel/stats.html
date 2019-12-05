@@ -1,8 +1,17 @@
 <!doctype>
 <html>
-  <title>Stats</title>
+<title>Stats</title>
+<style>
+table, th, td {
+	border: 1px solid black;
+}
+table {
+	width: 30%
+	background-color: #black;
+}
+</style>
   <body>
-    <p>Age distribution</p>
+    <h4>Age Distribution</h4>
     <table>
       {% for head,num in dict_1.items %}
       <tr>
@@ -11,6 +20,38 @@
       </tr>
       {% endfor %}
     </table>
+
+    <h4>Primary Fur Color Distribution</h4>
+    <table>
+      {% for head,num in dict_2.items %}
+      <tr>
+	<th>{{head}}:</th>
+	<td>{{num}}</th>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <h4>Location Distribution</h4>
+    <table>
+      {% for head,num in dict_3.items %}
+      <tr>
+	<th>{{head}}:</th>
+	<td>{{num}}</th>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <h4>Activities in details</h4>
+    <table>
+      {% for head,num in dict_4.items %}
+      <tr>
+	<th>{{head}}:</th>
+	<td>{{num}}</th>
+      </tr>
+      {% endfor %}
+    </table>
+
+
   </body>
 </html>
 	

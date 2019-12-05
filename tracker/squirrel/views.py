@@ -31,7 +31,8 @@ def add(request):
     return render(request,'squirrel/edit.html',{'form':form})
 
 def update(request, squirrel_id):
-    squirrel = Squirrel.objects.get(squirrel_id=squirrel_id)
+    squirrel = Squirrel.objects.filter(squirrel_id=squirrel_id).first()
+    #squirrel = Squirrel.objects.get(squirrel_id=squirrel_id)
     if request.method == 'POST':
         #check form data
         form = SquirrelForm(request.POST, instance=squirrel)
